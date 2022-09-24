@@ -1,0 +1,57 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1500,
+  "height": 750,
+  "title": "Deaths by Volcanic Erruption",
+  "projection": {"type": "equalEarth"},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/shahanck/FIT3179-Homework-task-3/main/ne_110m.json",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightgoldenrodyellow",
+        "stroke": "lightgray"
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/shahanck/FIT3179-Homework-task-3/main/volcano_data_2010.csv"
+      },
+      "mark": {"type": "circle"},
+      "encoding": {
+        "tooltip": [
+          {"field": "Name", "type": "nominal"},
+          {"field": "Year", "type": "ordinal"},
+          {"field": "Country", "type": "nominal"},
+          {"field": "Latitude", "type": "quantitative", "format": ","},
+          {"field": "Longitude", "type": "quantitative", "format": ","},
+          {"field": "Elevation", "type": "quantitative", "format": ","},
+          {"field": "Type", "type": "nominal"},
+          {"field": "DEATHS", "type": "quantitative", "format": ","}
+        ],
+        "longitude": {"field": "Longitude", "type": "quantitative"},
+        "latitude": {"field": "Latitude", "type": "quantitative"},
+        "size": {
+          "field": "DEATHS",
+          "type": "quantitative",
+          "title": "Deaths",
+          "scale": {
+            "type": "threshold",
+            "domain": [1, 5, 10, 30, 50, 100, 300],
+            "range": [0, 100, 300, 500, 1000, 1500, 2500, 5000]
+          }
+        },
+        "color": {
+          "field": "Elevation",
+          "type": "quantitative",
+          "title": "Elevation",
+          "scale": {"scheme": "reds"}
+        }
+      }
+    }
+  ],
+  "config": {}
+}
